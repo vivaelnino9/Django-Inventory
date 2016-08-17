@@ -46,54 +46,7 @@ SITE_ID = 1
 
 # LOGGING CONFIGURATION
 # A logging configuration that writes log messages to the console.
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    # Formatting of messages.
-    'formatters': {
-        # Don't need to show the time when logging to console.
-        'console': {
-            'format': '%(levelname)s %(name)s.%(funcName)s (%(lineno)d) %(message)s'
-        }
-    },
-    # The handlers decide what we should do with a logging message - do we email
-    # it, ditch it, or write it to a file?
-    'handlers': {
-        # Writing to console. Use only in dev.
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'console'
-        },
-        # Send logs to /dev/null.
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-    },
-    # Loggers decide what is logged.
-    'loggers': {
-        '': {
-            # Default (suitable for dev) is to log to console.
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': False,
-        },
-        'photologue': {
-            # Default (suitable for dev) is to log to console.
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        # logging of SQL statements. Default is to ditch them (send them to
-        # null). Note that this logger only works if DEBUG = True.
-        'django.db.backends': {
-            'handlers': ['null'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
-}
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -183,7 +136,8 @@ USE_TZ = True
 
 def get_static_memcache():
     # For python 2.7, just 'import urlparse'
-    from urllib.parse import urlparse
+    from importlib import import_module
+
 
     if os.environ.get('REDIS_URL', ''):
         redis_url = urlparse(os.environ.get('REDIS_URL'))
@@ -204,20 +158,12 @@ def get_static_memcache():
         }
     }
 
-CACHES = {
-    # Replace the default cache with your existing one (if you have any)
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-    },
-    'collectfast': get_static_memcache(),
-}
 
-COLLECTFAST_CACHE = 'collectfast'
 
 
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
-MEDIA_URL = 'inventory/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
