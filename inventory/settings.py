@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inv_app.apps.InvAppConfig',
     'bootstrap3',
-    'photologue',
     'sortedm2m',
     'storages',
     'boto',
@@ -109,13 +108,10 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'inventory.urls'
 
-from photologue import PHOTOLOGUE_APP_DIR
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-        '/templates/',
-        PHOTOLOGUE_APP_DIR],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -224,4 +220,4 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
 MEDIA_URL = 'inventory/media/'
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, '/media/')
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')

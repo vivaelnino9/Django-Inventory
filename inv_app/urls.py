@@ -10,5 +10,4 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^profile/(?P<inv_user_id>[0-9]+)/$', views.profile, name='profile'),
     url(r'^products/$', views.products, name='products'),
-    url(r'^photologue/', include('photologue.urls', namespace='photologue')),
 ]
