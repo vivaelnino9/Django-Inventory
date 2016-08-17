@@ -1,0 +1,38 @@
+{% load staticfiles %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'index' %}"</a>
+        <img src= "{% static 'img/nav-logo.png' %}" alt="Brand">
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{% url 'index' %}">HOME</a></li>
+        <li><a href="{% url 'products' %}">PRODUCTS</a></li>
+        <li><a href="#">CONCEPTS</a></li>
+        <li><a href="#">ABOUT US</a></li>
+        <li><a href="#">CONTACT</a></li>
+        <li><a href="#">PRESS</a></li>
+        <li><a href="http://www.facebook.com/pages/Sherry-Sheaf-and-Co-Inc/185365518163921?fref=ts" target="_blank">FACEBOOK</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class="sub-page"><a href="{% url 'photologue:pl-photo-archive' %}">Date views</a></li>
+            <li class="sub-page"><a href="{% url 'photologue:photo-list' %}">List views</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

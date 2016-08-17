@@ -1,0 +1,29 @@
+<!DOCTYPE>
+<html>
+
+{% extends 'bootstrap3/bootstrap3.html' %}
+
+{% load bootstrap3 %}
+
+{% load staticfiles %}
+
+{% block bootstrap3_title %}SHERRY SHEAF | {% block title %}HOME{% endblock %}{% endblock %}
+
+
+{% block bootstrap3_extra_head %}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link href="{% static 'base.css' %}" rel="stylesheet">
+<link rel="icon" href="{% static 'img/favicon.ico' %}">
+
+<link href='https://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
+
+{% endblock %}
+
+{% block bootstrap3_content %}
+{% include "navigation.html" %}
+<div id="content" class="container">
+  {% block content %}{% endblock %}
+</div>
+<div class="footer"> &copy;2016 | Sherry Sheaf & Company INC. </div>
+{% endblock %}
+</html>
