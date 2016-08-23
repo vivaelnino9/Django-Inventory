@@ -18,7 +18,9 @@
       <ul class="nav navbar-nav">
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'index' %}">HOME</a></li>
+        <li><a href="{% url 'index' %}"
+          {% if request.path == index %}class="active"{% endif %}
+          >HOME</a></li>
         <li><a href="{% url 'products' %}">PRODUCTS</a></li>
         <li><a href="#">CONCEPTS</a></li>
         <li><a href="#">ABOUT US</a></li>

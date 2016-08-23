@@ -30,6 +30,7 @@ HOST = ''
 
 INSTALLED_APPS = [
     'django.contrib.sites',
+    'django.contrib.sitemaps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inv_app.apps.InvAppConfig',
+    'photologue',
     'bootstrap3',
     'sortedm2m',
     'storages',
@@ -61,10 +63,16 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'inventory.urls'
 
+
+
+from photologue import PHOTOLOGUE_APP_DIR
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+        PHOTOLOGUE_APP_DIR,
+        'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,7 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+                ]
         },
     },
 ]
@@ -134,36 +142,8 @@ USE_TZ = True
 # MEDIAFILES_LOCATION = 'media' # name of folder within bucket
 
 
-def get_static_memcache():
-    # For python 2.7, just 'import urlparse'
-    from importlib import import_module
-
-
-    if os.environ.get('REDIS_URL', ''):
-        redis_url = urlparse(os.environ.get('REDIS_URL'))
-        return {
-            "BACKEND": "redis_cache.RedisCache",
-            'TIMEOUT': None,
-            "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
-            "OPTIONS": {
-                "PASSWORD": redis_url.password,
-                "DB": 0,
-            }
-        }
-    return {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': None,
-        'OPTIONS': {
-            'MAX_ENTRIES': 5000
-        }
-    }
-
-
-
-
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')

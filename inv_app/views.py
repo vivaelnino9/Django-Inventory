@@ -2,14 +2,15 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
+from django.views.generic.list import ListView
 from django.core.urlresolvers import reverse
 from django.utils import formats
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
-from inv_app.forms import UserForm, Inv_UserForm
-from inv_app.models import Inv_User
 
+from inv_app.forms import *
+from inv_app.models import *
 
 
 def index(request):
@@ -93,9 +94,10 @@ def user_login(request):
             # Is the account active?
             if user.is_active:
                 # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
+                # We'll send the user to the products page.
                 login(request, user)
-                return render(request,"products.html")
+                #return render(request,"products.html")
+                return HttpResponseRedirect(reverse('products'))
             else:
                 # An inactive account was used - no logging in!
                 return render(request, 'redirect.html', {
@@ -130,8 +132,3 @@ def profile(request, inv_user_id):
 def user_logout(request):
     logout(request)
     return render(request,"products.html")
-def products(request):
-    """
-        Serve view for products page
-        """
-    return render(request, "products.html")

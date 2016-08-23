@@ -1,78 +1,40 @@
-.welcome-img {
-    z-index: -1;
-    position: absolute;
-    height: 500px;
-    width: top: 100px;
-    left: 0px;
-    right: 0px;
-    background-size: cover;
-    background-position-y: -50px;
+a, h1, p, #footer {
+    font-family: 'Carrois Gothic', sans-serif;
 }
-.welcome-separator {
-    height: 50px;
+p {
+    font-size: 35px;
 }
-.form-wrapper {
-    max-width: 400px;
-    margin: 0 auto;
+small {
+    font-size: 15px;
 }
-.form-control {
+div.row img {
+    margin-bottom: 5px;
+    display: inline-block;
+}
+div.row img:hover {
+    -moz-box-shadow: 0 0 10px #ccc;
+    -webkit-box-shadow: 0 0 10px #ccc;
+    box-shadow: 0 0 10px #ccc;
+}
+#border {
+    border: 0px solid transparent;
+}
+#footer {
     width: 100%;
-    height: auto;
-    padding: 10px;
-    margin-top: 2px;
-}
-.form-submit {
-    margin-top: 10px;
-}
-.navbar-default {
-    background-color: #484848;
-    height: 86px;
-    /*border-color: #030033;*/
-}
-.navbar-default .navbar-nav> li> a {
-    color: #999999;
-    weight: normal;
-    style: normal;
-    font-family: 'Carrois Gothic', sans-serif;
-    font-size: 12px;
-    font-weight: bold;
-    letter-spacing: 2;
-}
-.navbar-default .navbar-nav> li> a:hover, .navbar-default .navbar-nav> li> a:focus {
-    color: #fff;
-}
-.navbar-default .navbar-nav> li> a:active {
-    color: #999;
-    text-decoration: none font-size: 11px;
-}
-.navbar-nav {
-    position: absolute;
-    left: 650px;
-    top: 40px;
-    width: 1000px;
-    z-index: 2;
-    overflow: visible;
-    text-transform: none;
-    font-variant: normal;
-    letter-spacing: 0.22px
-}
-.navbar-default .navbar-nav .wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -155px;
-    /* the bottom margin is the negative value of the footer's height */
-}
-.footer {
-    font-family: 'Carrois Gothic', sans-serif;
-    font-size: 12px;
-    letter-spacing: 2;
-    text-align: center;
+    height: 100px;
     position: absolute;
     bottom: 0;
-    width: 100%;
-    background: transparent;
-    height: 80px;
+    text-align: center;
+}
+.btn-warning {
+    color: #b7b7b7;
+    float: right;
+    background-color: #484848;
+    border-color: #484848;
+}
+.btn-warning.focus, .btn-warning:focus, .btn-warning:hover {
+    background-color: #7e7e7e;
+    border-color: #7e7e7e;
 }
 .carousel-inner, .carousel, .item, .container, .fill {
     /*height: 100%;*/
@@ -97,157 +59,69 @@
     width: 100%;
     height: 580px;
 }
-Skip to content This repository Search Pull requests Issues Gist @vivaelnino9 Watch 2 Star 7 Fork 6 raphaa/cmsplugin-photologue-pro Code Issues 0 Pull requests 1 Wiki Pulse Graphs Branch: master Find file Copy pathcmsplugin-photologue-pro/cmsplugin_photologue_pro/static/css/photologue_pro.css 22a2089 on Jun 3, 2012 Raphael Jasjukaitis Browser support updated. 0 contributors RawBlameHistory 213 lines (178 sloc) 6.1 KB .center {
+.footer {
+    font-size: 12px;
+    letter-spacing: 2;
     text-align: center;
-}
-.photologue_pro_album, .photologue_pro_photo {
-    float: left;
-}
-.photologue_pro_album {
-    margin: 0 40px 10px 0;
-}
-.photologue_pro_photo {
-    margin: 0 5px 10px 0;
-}
-.photologue_pro_album_thumbnails {
-    display: block;
-    height: 150px;
-    width: 150px;
-    padding: 10px;
-}
-.photologue_pro_album .photologue_pro_polaroid {
     position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: transparent;
+    height: 80px;
 }
-.photologue_pro_polaroid {
-    width: 130px;
-    height: 130px;
+.form-wrapper {
+    max-width: 400px;
+    margin: 0 auto;
+}
+.form-control {
+    width: 100%;
+    height: auto;
     padding: 10px;
-    background-color: #fff;
-    -webkit-transition: -webkit-transform .15s linear;
-    -moz-transition: -moz-transform .15s linear;
-    -o-transition: -o-transform .15s linear;
-    transition: transform .15s linear;
-    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
-    -o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
-    -ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    margin-top: 2px;
 }
-.photologue_pro_polaroid.photo1 {
-    z-index: 3;
+.form-submit {
+    margin-top: 10px;
 }
-.photologue_pro_polaroid.photo2 {
+.navbar-default {
+    background-color: #484848;
+    height: 86px;
+    /*border-color: #030033;*/
+}
+.navbar-default .navbar-nav> li> a {
+    color: #999999;
+    weight: normal;
+    style: normal;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2;
+}
+.navbar-default .navbar-nav> li> a:hover, .navbar-default .navbar-nav> li> a:focus {
+    color: #fff;
+}
+.navbar-default .navbar-nav> li> a:active {
+    color: #fff;
+    text-decoration: none font-size: 11px;
+}
+.navbar-nav {
+    position: absolute;
+    left: 650px;
+    top: 40px;
+    width: 1000px;
     z-index: 2;
+    overflow: visible;
+    text-transform: none;
+    font-variant: normal;
+    letter-spacing: 0.22px
 }
-.photologue_pro_polaroid.photo3 {
-    z-index: 1;
+.navbar-default .navbar-nav .wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -155px;
+    /* the bottom margin is the negative value of the footer's height */
 }
-.photologue_pro_album_thumbnails.order1 .photologue_pro_polaroid.photo1, .photologue_pro_album_thumbnails.order2 .photologue_pro_polaroid.photo2, .photologue_pro_album_thumbnails.order3 .photologue_pro_polaroid.photo3 {
-    -webkit-transform: rotate(-4deg);
-    -moz-transform: rotate(-4deg);
-    -o-transform: rotate(-4deg);
-    -ms-transform: rotate(-4deg);
-    transform: rotate(-4deg);
-}
-.photologue_pro_album_thumbnails.order1 .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails.order2 .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails.order3 .photologue_pro_polaroid.photo1 {
-    -webkit-transform: rotate(4deg);
-    -moz-transform: rotate(4deg);
-    -o-transform: rotate(4deg);
-    -ms-transform: rotate(4deg);
-    transform: rotate(4deg);
-}
-.photologue_pro_album_thumbnails.order:hover .photologue_pro_polaroid, .photologue_pro_album_thumbnails.order:focus .photologue_pro_polaroid {
-    -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-    -o-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-    -ms-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
-}
-.photologue_pro_album_thumbnails:hover .photologue_pro_polaroid.photo1, .photologue_pro_album_thumbnails:focus .photologue_pro_polaroid.photo1 {
-    z-index: 6;
-}
-.photologue_pro_album_thumbnails:hover .photologue_pro_polaroid.photo2, .photologue_pro_album_thumbnails:focus .photologue_pro_polaroid.photo2 {
-    z-index: 5;
-}
-.photologue_pro_album_thumbnails:hover .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails:focus .photologue_pro_polaroid.photo3 {
-    z-index: 4;
-}
-.photologue_pro_album_thumbnails.order1:hover .photologue_pro_polaroid.photo1, .photologue_pro_album_thumbnails.order1:focus .photologue_pro_polaroid.photo1, .photologue_pro_album_thumbnails.order2:hover .photologue_pro_polaroid.photo2, .photologue_pro_album_thumbnails.order2:focus .photologue_pro_polaroid.photo2, .photologue_pro_album_thumbnails.order3:hover .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails.order3:focus .photologue_pro_polaroid.photo3 {
-    -webkit-transform: scale(1.15) rotate(-8deg) translate(-3em, 0em);
-    -moz-transform: scale(1.15) rotate(-8deg) translate(-3em, 0em);
-    -o-transform: scale(1.15) rotate(-8deg) translate(-3em, 0em);
-    -ms-transform: scale(1.15) rotate(-8deg) translate(-3em, 0em);
-    transform: scale(1.15) rotate(-8deg) translate(-3em, 0em);
-}
-.photologue_pro_album_thumbnails.order1:hover .photologue_pro_polaroid.photo2, .photologue_pro_album_thumbnails.order1:focus .photologue_pro_polaroid.photo2, .photologue_pro_album_thumbnails.order2:hover .photologue_pro_polaroid.photo1, .photologue_pro_album_thumbnails.order2:focus .photologue_pro_polaroid.photo1, .photologue_pro_album_thumbnails.order3:hover .photologue_pro_polaroid.photo2, .photologue_pro_album_thumbnails.order3:focus .photologue_pro_polaroid.photo2 {
-    -webkit-transform: scale(1.15) rotate(0deg);
-    -moz-transform: scale(1.15) rotate(0deg);
-    -o-transform: scale(1.15) rotate(0deg);
-    -ms-transform: scale(1.15) rotate(0deg);
-    transform: scale(1.15) rotate(0deg);
-}
-.photologue_pro_album_thumbnails.order1:hover .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails.order1:focus .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails.order2:hover .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails.order2:focus .photologue_pro_polaroid.photo3, .photologue_pro_album_thumbnails.order3:hover .photologue_pro_polaroid.photo1, .photologue_pro_album_thumbnails.order3:focus .photologue_pro_polaroid.photo1 {
-    -webkit-transform: scale(1.15) rotate(8deg) translate(3em, 0em);
-    -moz-transform: scale(1.15) rotate(8deg) translate(3em, 0em);
-    -o-transform: scale(1.15) rotate(8deg) translate(3em, 0em);
-    -ms-transform: scale(1.15) rotate(8deg) translate(3em, 0em);
-    transform: scale(1.15) rotate(8deg) translate(3em, 0em);
-}
-.photologue_pro_navigation {
-    margin: 0 0 15px;
-}
-.photologue_pro_navigation a {
-    margin-right: 10px;
-}
-.photologue_pro_album_title, .photologue_pro_photo_title {
-    margin: 0;
-}
-.photologue_pro_album_index a {
-    margin: 8px;
-}
-.photologue_pro_album_index a:hover .photologue_pro_polaroid, .photologue_pro_album_index a:focus .photologue_pro_polaroid {
-    -webkit-transform: scale(1.2);
-    -moz-transform: scale(1.2);
-    -o-transform: scale(1.2);
-    -ms-transform: scale(1.2);
-    transform: scale(1.2);
-    z-index: 2;
-}
-.photologue_pro_album_description {
-    margin: 0;
-    padding: 15px 0 0;
-    clear: both;
-}
-.photologue_pro_photo_left {
-    float: left;
-}
-.photologue_pro_photo_details img {
-    margin: 0 auto 15px auto;
-}
-.photologue_pro_photo_details img, .photologue_pro_photo_caption {
-    display: block;
-}
-.photologue_pro_photo_sidebar {
-    width: 280px;
-    float: right;
-}
-.photologue_pro_photo_sidebar h3, .photologue_pro_photo_sidebar p {
-    margin: 0;
-}
-.photologue_pro_photo_sidebar div {
-    margin: 0 0 20px;
-}
-.photologue_pro_photo_sidebar table {
-    border-spacing: 0;
-}
-.photologue_pro_photo_sidebar table th {
-    padding-right: 10px;
-    text-align: left;
-}
-.photologue_pro_photo_sidebar table th, .photologue_pro_photo_sidebar table td {
-    vertical-align: top;
-}
-.photologue_pro_pagination {
-    padding-top: 15px;
-    clear: both;
+.row {
+    margin-right: 150px;
+    margin-left: 250px;
+    width: 1000px;
 }
