@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'inv_app.apps.InvAppConfig',
     'photologue',
     'bootstrap3',
+    'activelink',
     'sortedm2m',
     'storages',
     'boto',

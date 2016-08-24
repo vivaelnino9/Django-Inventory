@@ -132,3 +132,10 @@ def profile(request, inv_user_id):
 def user_logout(request):
     logout(request)
     return render(request,"products.html")
+
+def concepts(request):
+    return render(request,"concepts.html")
+def about(request):
+    return render(request,"about.html")
+def contact(request):
+    return render(request,"contact.html")

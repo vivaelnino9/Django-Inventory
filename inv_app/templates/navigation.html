@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles activelink %}
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -15,16 +15,13 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-      </ul>
+      <ul class="nav navbar-nav"></ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'index' %}"
-          {% if request.path == index %}class="active"{% endif %}
-          >HOME</a></li>
-        <li><a href="{% url 'products' %}">PRODUCTS</a></li>
-        <li><a href="#">CONCEPTS</a></li>
-        <li><a href="#">ABOUT US</a></li>
-        <li><a href="#">CONTACT</a></li>
+        <li class={% ifactive 'index' %}"active"{% endifactive %}><a href="{% url 'index' %}">HOME</a></li>
+        <li class={% ifactive 'products' %}"active"{% endifactive %}><a href="{% url 'products' %}">PRODUCTS</a></li>
+        <li class={% ifactive 'concepts' %}"active"{% endifactive %}><a href="{% url 'concepts' %}">CONCEPTS</a></li>
+        <li class={% ifactive 'about' %}"active"{% endifactive %}><a href="{% url 'about' %}">ABOUT US</a></li>
+        <li class={% ifactive 'contact' %}"active"{% endifactive %}><a href="{% url 'contact' %}">CONTACT</a></li>
         <li><a href="#">PRESS</a></li>
         <li><a href="http://www.facebook.com/pages/Sherry-Sheaf-and-Co-Inc/185365518163921?fref=ts" target="_blank">FACEBOOK</a></li>
       </ul>

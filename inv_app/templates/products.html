@@ -11,8 +11,9 @@
 <!-- user logged in  -->
 {% if user.is_authenticated %}
 <!-- <h1>Hello {{ user.username }}!</h1> -->
-<p>Products <small>{{ object_list|length }} items</small></p>
-<a class="btn btn-warning" href="{% url 'logout' %}">Log out</a>
+<p id =label>PRODUCTS <small>{{ object_list|length }} items</small></p>
+<a class="btn btn-warning btn-sm" href="{% url 'logout' %}">LOGOUT</a>
+<p id="welcome">HELLO, {{ user.username }}!</p>
 
 
 {% if object_list %}

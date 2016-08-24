@@ -14,5 +14,8 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^profile/(?P<inv_user_id>[0-9]+)/$', views.profile, name='profile'),
     url(r'^products/$', PhotoListView.as_view(template_name='products.html'), name='products'),
+    url(r'^concepts/$', views.concepts, name='concepts'),
+    url(r'^about/$', views.about, name='about'),
+    url(r'^contact/$', views.contact, name='contact'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
 ]
