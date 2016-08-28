@@ -5,3 +5,6 @@ Thumbs.db
 # Python
 *.pyc
 __pycache__
+
+# Photologue
+inventory/media/photologue
