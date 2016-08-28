@@ -6,5 +6,6 @@ Thumbs.db
 *.pyc
 __pycache__
 
-# Photologue
+# Django
+inventory/static
 inventory/media/photologue
