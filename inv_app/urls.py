@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^concepts/$', views.concepts, name='concepts'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
+    url(r'^press/$', views.press, name='press'),
     url(r'^photologue/', include('photologue.urls', namespace='photologue')),
 ]
