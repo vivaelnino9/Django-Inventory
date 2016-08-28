@@ -1,16 +1,14 @@
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 body {
     font-family: 'Carrois Gothic', sans-serif;
 }
 small {
     font-size: 14px;
-}
-p, center {
-    letter-spacing: 2px;
-    text-transform: uppercase;
 }
 div.row img {
     margin-bottom: 5px;
@@ -107,7 +105,23 @@ div.row img:hover {
     height: 580px;
 }
 
-/* login ford*/
+/* contact page */
+
+.contact {
+    color: #6a6a6a;
+    font-size: 20px;
+    font-weight: normal;
+    text-align: center;
+    position: fixed;
+    width: 400px;
+    left: 500px;
+    top: 250px
+}
+.col-md-3 {
+    padding-top: 60px;
+}
+
+/* login form*/
 
 .form-wrapper {
     max-width: 400px;
@@ -158,16 +172,9 @@ div.row img:hover {
     font-variant: normal;
     letter-spacing: 0.22px
 }
+.row {
+    padding-left: 30px;
+    padding-right: 30px;
+}
 
 /* row */
-
-.contact {
-    color: #6a6a6a;
-    font-size: 20px;
-    font-weight: normal;
-    text-align: center;
-    position: fixed;
-    width: 400px;
-    left: 500px;
-    top: 250px
-}
