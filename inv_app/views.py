@@ -9,8 +9,12 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 
 
+from photologue.models import Photo
+
 from inv_app.forms import *
 from inv_app.models import *
+
+from django.views.generic.edit import FormView
 
 
 def index(request):
@@ -97,7 +101,7 @@ def user_login(request):
                 # We'll send the user to the products page.
                 login(request, user)
                 #return render(request,"products.html")
-                return HttpResponseRedirect(reverse('products'))
+                return HttpResponseRedirect(reverse('product'))
             else:
                 # An inactive account was used - no logging in!
                 return render(request, 'redirect.html', {
@@ -131,7 +135,17 @@ def profile(request, inv_user_id):
 @login_required
 def user_logout(request):
     logout(request)
-    return render(request,"products.html")
+    return HttpResponseRedirect(reverse('product'))
+
+
+class ProductListView(ListView):
+    queryset = Photo.objects.on_site().is_public()
+    paginate_by = 10
+    template_name = 'product.html'
+    def get_queryset(self):
+        min_view_count = self.request.GET.get('min_view_count', 0)
+        return Photo.objects.filter(view_count__gte=min_view_count)
+
 
 def concepts(request):
     return render(request,"concepts.html")

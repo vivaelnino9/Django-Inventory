@@ -1,4 +1,8 @@
-a, h1, h6, p, center, #footer {
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+body {
     font-family: 'Carrois Gothic', sans-serif;
 }
 small {
@@ -27,8 +31,9 @@ div.row img:hover {
 /* footer */
 
 #footer {
+    background-color: #d3d3d3;
     width: 100%;
-    height: 60px;
+    height: 95px;
     position: absolute;
     bottom: 0;
     text-align: center;
@@ -39,28 +44,29 @@ div.row img:hover {
 #label {
     font-size: 30px;
     font-weight: 600;
-    float: left;
-    top: 0px;
 }
 
-/* user welcome*/
+/* user welcome */
 
-#welcome {
+
+/*#welcome {
     font-weight: 200;
     font-size: 14px;
     float: right;
     position: relative;
     top: 15px;
     right: 10px;
+}*/
+
+#welcome {
+    font-weight: 200;
+    font-size: 14px;
 }
 
 /* button */
 
 .btn-warning {
     color: #b7b7b7;
-    float: right;
-    position: relative;
-    top: 10px;
     background-color: #484848;
     border-color: #484848;
 }
@@ -71,11 +77,16 @@ div.row img:hover {
 
 /* image carousel */
 
+.block {
+    /* carousel width */
+    margin-left: -15px;
+    margin-right: -15px;
+}
 .carousel-inner, .carousel, .item, .container, .fill {
     width: 100%;
 }
 .carousel-control.right {
-    right: 30;
+    right: 30px;
 }
 .carousel-inner> .active {
     width: 100%;
@@ -94,19 +105,6 @@ div.row img:hover {
 .carousel-inner> .active>img, .carousel-inner> .item>img {
     width: 100%;
     height: 580px;
-}
-
-/* footer */
-
-.footer {
-    font-size: 12px;
-    letter-spacing: 4px;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background: transparent;
-    height: 80px;
 }
 
 /* login ford*/
@@ -163,12 +161,6 @@ div.row img:hover {
 
 /* row */
 
-.row {
-    /* image row editing */
-    margin-right: 150px;
-    margin-left: 250px;
-    width: 1000px;
-}
 .contact {
     color: #6a6a6a;
     font-size: 20px;
