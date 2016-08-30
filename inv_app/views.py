@@ -137,13 +137,12 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('product'))
 
-
 class ProductListView(ListView):
     queryset = Photo.objects.on_site().is_public()
-    paginate_by = 10
+    paginate_by = 16
     template_name = 'product.html'
     def get_queryset(self):
-        min_view_count = self.request.GET.get('min_view_count', 0)
+        min_view_count = self.request.GET.get('min_view_count',0)
         return Photo.objects.filter(view_count__gte=min_view_count)
 
 
