@@ -137,6 +137,13 @@ def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('product'))
 
+class CollectionsView(ListView):
+    def get_queryset(self):
+        collection = self.request.GET.get('collection','')
+        return GalleryExtended.objects.filter(collection)
+    paginate_by = 20
+
+
 class ProductListView(ListView):
     queryset = Photo.objects.on_site().is_public()
     paginate_by = 16
