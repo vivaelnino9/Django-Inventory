@@ -1,9 +1,31 @@
+import os
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from photologue.models import Gallery
+from autoslug import AutoSlugField
+from .managers import GalleryQuerySet, PhotoQuerySet
+from django.utils.timezone import now
+from sortedm2m.fields import SortedManyToManyField
+from django.db.models.signals import post_save
+from django.utils.functional import curry
+from django.utils.encoding import force_text, smart_str, filepath_to_uri
+from django.core.urlresolvers import reverse
+from PIL import Image
+from io import BytesIO
+from django.core.files.base import ContentFile
+from django.core.validators import RegexValidator
+from easy_thumbnails.files import get_thumbnailer
+from easy_thumbnails.fields import ThumbnailerImageField
+
+CATEGORIES = (
+        ('Rings','Rings'),
+        ('Necklaces','Necklaces'),
+        ('Bracelets','Bracelets')
+)
+
+size_method_map = {}
 
 class Inv_User(models.Model):
     user = models.OneToOneField(User)
@@ -15,32 +37,124 @@ class Inv_User(models.Model):
     def __str__(self):
         return self.user.username
 
-CATEGORIES = (
-        ('rings','rings'),
-        ('necklaces','necklaces'),
-        ('bracelets','bracelets')
-)
-
-class GalleryExtended(models.Model):
-    # Link back to Photologue's Gallery model.
-    gallery = models.OneToOneField(Gallery, related_name='extended')
-    collection = models.CharField(
-        unique=True,
-        max_length=250,
-        verbose_name='collection'
+class ImageModel(models.Model):
+    image = models.ImageField(
+        'image',
+        max_length=100,
+        upload_to='photos'
     )
-    category = models.CharField(
-        unique=True,
-        max_length=250,
-        choices=CATEGORIES,
-        verbose_name='category'
+    view_count = ThumbnailerImageField(
+        'view count',
+        default=0,
+        editable=False
     )
-
-
-    # Boilerplate code to make a prettier display in the admin interface.
     class Meta:
-        verbose_name = 'Extra fields'
-        verbose_name_plural = 'Extra fields'
+        abstract = True
+
+    def admin_thumbnail(self):
+        admin_thumbnail_url = get_thumbnailer(self.image)['admin_thumbnail'].url
+        return '<img src="%s">' % self.image
+        # Try self.get_absolute_url instead of self.image although might
+        # not work because easy-thumbnails size setting might not be applied
+        # If it does, consider the if statement photologue uses
+    admin_thumbnail.short_description = 'Thumbnail'
+
+    def image_filename(self):
+        return os.path.basename(force_text(self.image.name))
+
+    def increment_count(self):
+        self.view_count += 1
+        models.Model.save(self)
+
+
+class Photo(ImageModel):
+
+    title = models.CharField(
+        'title',
+        max_length=250,
+        unique=True
+    )
+    slug = AutoSlugField(
+        'slug',
+        populate_from='title'
+    )
+    caption = models.TextField(
+        'caption',
+        blank=True
+    )
+    date_added = models.DateTimeField(
+        'date added',
+        default=now
+    )
+    objects = PhotoQuerySet.as_manager()
+
+    class Meta:
+        ordering = ['-date_added']
+        get_latest_by = 'date_added'
+        verbose_name = 'photo'
+        verbose_name_plural = 'photos'
 
     def __str__(self):
-        return self.gallery.title
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if self.slug is None:
+            self.slug = slugify(self.title)
+        super(Photo, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('photo-detail', args=[self.slug])
+
+class Gallery(models.Model):
+    date_added = models.DateTimeField(
+        'date published',
+        default=now
+    )
+    title = models.CharField(
+        'title',
+        max_length=250,
+        unique=True
+    )
+    slug = AutoSlugField(
+        'slug',
+        populate_from='title'
+    )
+    photos = SortedManyToManyField(
+        Photo,
+        related_name='gallery',
+        verbose_name='photos',
+        blank=True
+    )
+    collection = models.CharField(
+        'collection',
+        max_length=250,
+        blank=True
+    )
+    category = models.CharField(
+        'category',
+        max_length=250,
+        choices=CATEGORIES,
+        blank=True
+    )
+
+    objects = GalleryQuerySet.as_manager()
+
+    class Meta:
+        ordering = ['-date_added']
+        get_latest_by = 'date_added'
+        verbose_name = 'gallery'
+        verbose_name_plural = 'galleries'
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('gallery-detail', args=[self.slug])
+
+    def photo_count(self):
+        return Gallery.objects.count()
+    photo_count.short_description = 'count'
+
+    def sample(self):
+        if self.photo_count():
+            return Gallery.objects.all()[0]
