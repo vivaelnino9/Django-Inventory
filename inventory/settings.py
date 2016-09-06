@@ -31,7 +31,6 @@ HOST = ''
 INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
-    'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,9 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'inv_app.apps.InvAppConfig',
-    'photologue',
+    'easy_thumbnails',
     'bootstrap3',
     'activelink',
+    'autoslug',
     'sortedm2m',
     'storages',
     'boto',
@@ -67,12 +67,10 @@ ROOT_URLCONF = 'inventory.urls'
 
 
 
-from photologue import PHOTOLOGUE_APP_DIR
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-        PHOTOLOGUE_APP_DIR,
         'templates',
         ],
         'APP_DIRS': True,
@@ -129,6 +127,15 @@ TIME_ZONE = 'America/New_York'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'thumbnail': {'size': (200, 175), 'crop': False},
+        'admin_thumbnail': {'size': (50, 25), 'crop': False}
+    },
+}
+
 
 
 # Static files (CSS, JavaScript, Images)
