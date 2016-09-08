@@ -16,10 +16,16 @@ div.row img {
     margin-top: 15px;
     margin-right: 50px;
     display: inline-block;
+    border: 0px;
+}
+a#display {
+    border: 1px;
 }
 a {
     vertical-align: top;
     text-align: center;
+    color: transparent;
+    border: 1px;
 }
 a:hover {
     text-decoration: none;
@@ -28,13 +34,11 @@ a:hover {
 
 /* image border */
 
-a#wrapper:hover {
+img#img_wrapper:hover, a#a_wrapper:hover {
+    transition: 1s;
     -moz-box-shadow: 0 0 20px #ccc;
     -webkit-box-shadow: 0 0 20px #ccc;
     box-shadow: 0 0 20px #ccc;
-}
-#border {
-    border: 0px solid transparent;
 }
 
 /* page label */
@@ -50,13 +54,14 @@ a#wrapper:hover {
     font-size: 14px;
     font-weight: 600;
 }
-#wrapper .text {
+#title .text, a.gallery-sample p.text {
     position: relative;
-    bottom: 28px;
+    bottom: 40px;
     visibility: hidden;
     text-align: center;
 }
-#wrapper:hover .text {
+#title:hover .text, a.gallery-sample:hover p.text {
+    transition: 2s;
     visibility: visible;
     color: #000;
     font-weight: 100;
@@ -87,7 +92,7 @@ a#wrapper:hover {
 .carousel-control.right {
     right: 30px;
 }
-.carousel-inner> .active {
+.carousel-inner>.active {
     width: 100%;
     left: 0;
 }
@@ -101,7 +106,7 @@ a#wrapper:hover {
     width: 10;
     right: 0;
 }
-.carousel-inner> .active>img, .carousel-inner> .item>img {
+.carousel-inner>.active>img, .carousel-inner>.item>img {
     width: 100%;
     height: 580px;
 }
@@ -165,14 +170,14 @@ a#wrapper:hover {
     background-color: #484848;
     height: 86px;
 }
-.navbar-default .navbar-nav> li> a {
+.navbar-default .navbar-nav>li>a {
     /* navbar font editing */
     color: #999999;
     font-size: 12px;
     font-weight: bold;
     letter-spacing: 2;
 }
-.navbar-default .navbar-nav> li> a:hover, .navbar-default .navbar-nav> li> a:focus {
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
     /* highlight when hover */
     color: #fff;
 }
@@ -207,10 +212,13 @@ a#wrapper:hover {
     font-size: 18px;
     color: #333;
 }
+p.sub-header {
+    font-size: 16px;
+}
 a#active {
     background-color: #d3d3d3;
 }
-p.page-header {
+p.page-header, p.sub-header {
     text-align: center;
 }
 div.row a {
