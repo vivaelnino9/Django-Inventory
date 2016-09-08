@@ -18,6 +18,7 @@ from django.core.files.base import ContentFile
 from django.core.validators import RegexValidator
 from easy_thumbnails.files import get_thumbnailer
 from easy_thumbnails.fields import ThumbnailerImageField
+from django.utils.safestring import mark_safe
 
 CATEGORIES = (
         ('Rings','Rings'),
@@ -53,10 +54,8 @@ class ImageModel(models.Model):
 
     def admin_thumbnail(self):
         admin_thumbnail_url = get_thumbnailer(self.image)['admin_thumbnail'].url
-        return '<img src="%s">' % self.image
-        # Try self.get_absolute_url instead of self.image although might
-        # not work because easy-thumbnails size setting might not be applied
-        # If it does, consider the if statement photologue uses
+        return mark_safe('<a href="%s"><img src="%s"></a>' % \
+            (self.get_absolute_url(), admin_thumbnail_url))
     admin_thumbnail.short_description = 'Thumbnail'
 
     def image_filename(self):
@@ -157,4 +156,4 @@ class Gallery(models.Model):
 
     def sample(self):
         if self.photo_count():
-            return Gallery.objects.all()[0]
+            return self.photos.all()[0]
