@@ -47,6 +47,22 @@ class GalleryAdmin(admin.ModelAdmin):
     remove_photos.short_description = \
         _("Remove all photos of selected galleries to the current gallery")
 
+    # def upload_zip(self,request):
+    #     # Handle form request
+    #     if request.method == 'POST':
+    #         form = UploadZipForm(request.POST, request.FILES)
+    #         if form.is_valid():
+    #             form.save(request=request)
+    #             return HttpResponseRedirect('..')
+    #     else:
+    #         form = UploadZipForm()
+    #     context['form'] = form
+    #     context['adminform'] = helpers.AdminForm(form,
+    #                                              list([(None, {'fields': form.base_fields})]),
+    #                                              {})
+    #     return render(request, 'upload_zip.html')
+
+
 admin.site.register(Gallery,GalleryAdmin)
 
 class PhotoAdminForm(forms.ModelForm):
