@@ -132,7 +132,7 @@ USE_TZ = True
 THUMBNAIL_ALIASES = {
     '': {
         'thumbnail': {'size': (200, 175), 'crop': False},
-        'admin_thumbnail': {'size': (125, 75), 'crop': False},
+        'admin_thumbnail': {'size': (75, 25), 'crop': True},
         'display': {'size': (1000, 600), 'crop': False}
     },
 }
