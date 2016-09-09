@@ -4,6 +4,7 @@ from django import forms
 from django.conf.urls import url
 from django.utils.translation import ungettext, ugettext_lazy as _
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 admin.site.register(Inv_User)
@@ -20,48 +21,39 @@ class GalleryAdmin(admin.ModelAdmin):
     list_filter = ['date_added',]
     date_hierarchy = 'date_added'
     form = GalleryAdminForm
+    view_on_site = False
 
-    def add_photos(modeladmin, request, queryset):
-        photos = Photo.objects.filter(gallery__in=queryset)
-        current_gallery = Gallery.objects.get_current()
-        current_gallery.photo_set.add(*photos)
-        msg = ungettext(
-            "The gallery has been successfully added to %(gallery)s",
-            "The galleries have been successfully added to %(gallery)s",
-            len(queryset)
-        ) % {'gallery': current_gallery.name}
-        messages.success(request, msg)
-    add_photos.short_description = \
-        _("Add all photos of selected galleries to the current gallery")
 
-    def remove_photos(modeladmin, request, queryset):
-        photos = Photo.objects.filter(gallery__in=queryset)
-        current_gallery = Gallery.objects.get_current()
-        current_gallery.photo_set.remove(*photos)
-        msg = ungettext(
-            "The gallery has been successfully removed from %(gallery)s",
-            "The galleries have been successfully removed from %(gallery)s",
-            len(queryset)
-        ) % {'gallery': current_gallery.name}
-        messages.success(request, msg)
-    remove_photos.short_description = \
-        _("Remove all photos of selected galleries to the current gallery")
+    def get_urls(self):
+        urls = super(GalleryAdmin, self).get_urls()
+        add_urls = [
+            url(r'^upload_zip/$',
+                self.admin_site.admin_view(self.upload_zip),
+                name='upload_zip')
+        ]
+        return add_urls + urls
 
-    # def upload_zip(self,request):
-    #     # Handle form request
-    #     if request.method == 'POST':
-    #         form = UploadZipForm(request.POST, request.FILES)
-    #         if form.is_valid():
-    #             form.save(request=request)
-    #             return HttpResponseRedirect('..')
-    #     else:
-    #         form = UploadZipForm()
-    #     context['form'] = form
-    #     context['adminform'] = helpers.AdminForm(form,
-    #                                              list([(None, {'fields': form.base_fields})]),
-    #                                              {})
-    #     return render(request, 'upload_zip.html')
-
+    @staff_member_required
+    def upload_zip(self,request):
+        context = {
+            'title': 'Upload a zip archive of photos',
+            'app_label': self.model._meta.app_label,
+            'opts': self.model._meta,
+            'has_change_permission': self.has_change_permission(request)
+        }
+        # Handle form request
+        if request.method == 'POST':
+            form = UploadZipForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save(request=request)
+                return HttpResponseRedirect('..')
+        else:
+            form = UploadZipForm()
+        context['form'] = form
+        context['adminform'] = helpers.AdminForm(form,
+                                                 list([(None, {'fields': form.base_fields})]),
+                                                 {})
+        return render(request, 'admin/inv_app/gallery/upload_zip.html',context)
 
 admin.site.register(Gallery,GalleryAdmin)
 
