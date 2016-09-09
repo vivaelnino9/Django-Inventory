@@ -39,12 +39,12 @@ class Inv_User(models.Model):
         return self.user.username
 
 class ImageModel(models.Model):
-    image = models.ImageField(
+    image = ThumbnailerImageField(
         'image',
         max_length=100,
         upload_to='photos'
     )
-    view_count = ThumbnailerImageField(
+    view_count = models.PositiveIntegerField(
         'view count',
         default=0,
         editable=False
