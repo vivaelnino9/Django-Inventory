@@ -118,7 +118,7 @@ class Gallery(models.Model):
         'slug',
         populate_from='title'
     )
-    photos = SortedManyToManyField(
+    photos = models.ManyToManyField(
         Photo,
         related_name='gallery',
         verbose_name='photos',
@@ -151,7 +151,7 @@ class Gallery(models.Model):
         return reverse('gallery-detail', args=[self.slug])
 
     def photo_count(self):
-        return Gallery.objects.count()
+        return self.photos.count()
     photo_count.short_description = 'count'
 
     def sample(self):
