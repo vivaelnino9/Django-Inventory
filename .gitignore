@@ -8,4 +8,4 @@ __pycache__
 
 # Django
 inventory/static
-inventory/media/photologue
+inventory/media/

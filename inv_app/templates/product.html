@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load i18n staticfiles %}
+
+
+{% block bootstrap3_title %}SHERRY SHEAF | {% block title %}PRODUCTS{% endblock %}{% endblock %}
+
+
+
+{% block content %}
+
+<!-- user logged in  -->
+{% if user.is_authenticated %}
+<!-- <h1>Hello {{ user.username }}!</h1> -->
+<div class="row">
+  <div class="pull-left" id="label">PRODUCTS <small>{{ object_list|length }} items</small></div>
+  <div class="pull-right" id="welcome">HELLO, {{ user.username }}! <a class="btn btn-warning btn-sm" href="{% url 'logout' %}">LOGOUT</a></div>
+</div>
+</div>
+
+
+{% if object_list %}
+<div class="row">
+  <div class="col-md-3">
+    <form method="get" action="{% url 'product' %}">
+      <!-- <div>
+        <label for="min_view_count">Min view count</label>
+        <input id="min_view_count" name="min_view_count" size="2"/>
+        <br>
+        <label for="type">Type</label>
+        <input id="test" name="test" size="2"/>
+        <br>
+        <label for="color">Color</label>
+        <input id="test2" name="test2" size="2"/>
+      </div> -->
+
+      {% csrf_token %}
+      Color
+      <div class="checkbox">
+        <label>
+          <input id="my_checkbox" value="1" type="checkbox"/>
+              Red
+        </label>
+        <br>
+        <label>
+          <input id="type" value="2" type="checkbox"/>
+              Green
+        </label>
+        <br>
+        <label>
+          <input id="color" value="3" type="checkbox"/>
+              Blue
+        </label>
+      </div>
+      <br>Type<br>
+        <div class="checkbox">
+          <label>
+            <input id="my_checkbox" value="1" type="checkbox"/>
+                Ring
+          </label>
+          <br>
+          <label>
+            <input id="type" value="2" type="checkbox"/>
+                Necklace
+          </label>
+          <br>
+          <label>
+            <input id="color" value="3" type="checkbox"/>
+                Bracelet
+          </label>
+      </div>
+
+
+      <br><input type="submit" class="btn btn-default btn-sm" value="Filter">
+    </form>
+  </div>
+  <div class="col-md-9"  >
+      {% for photo in object_list %}
+          <a href="{{ photo.get_absolute_url }}" id="wrapper">
+               <img src="{{ photo.get_thumbnail_url }}" class="hover" alt="{{ photo.title }}" id="border">
+               <p class="text">{{ photo.title }}</p>
+          </a>
+      {% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="row">{% trans "No photos were found" %}.</div>
+{% endif %}
+
+{% include "photologue/includes/paginator.html" %}
+
+<!-- user not logged in -->
+{% else %}
+<a class="btn btn-primary" href="{% url 'login' %}">Log in</a>
+
+<a class="btn btn-info" href="{% url 'register' %}">Register</a>
+{% endif %}
+{% endblock %}

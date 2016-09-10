@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n staticfiles %}
+{% load i18n staticfiles thumbnail %}
 
 
 {% block bootstrap3_title %}SHERRY SHEAF | {% block title %}PRODUCTS{% endblock %}{% endblock %}
@@ -11,29 +11,44 @@
 <!-- user logged in  -->
 {% if user.is_authenticated %}
 <!-- <h1>Hello {{ user.username }}!</h1> -->
-<p id =label>PRODUCTS <small>{{ object_list|length }} items</small></p>
-<a class="btn btn-warning btn-sm" href="{% url 'logout' %}">LOGOUT</a>
-<p id="welcome">HELLO, {{ user.username }}!</p>
-
-
-{% if object_list %}
-<div class="row col-lg-12">
-    {% for photo in object_list %}
-        <a href="{{ photo.get_absolute_url }}">
-             <img src="{{ photo.get_thumbnail_url }}" class="thumbnail" alt="{{ photo.title }}" id="border">
-        </a>
-    {% endfor %}
+<div class="row">
+  <!-- <div class="pull-left" id="label">PRODUCTS</div> -->
+  <div class="pull-right" id="welcome">HELLO, {{ user.username }}! <a class="btn btn-warning btn-sm" href="{% url 'logout' %}">LOGOUT</a></div>
 </div>
-{% else %}
-<div class="row">{% trans "No photos were found" %}.</div>
-{% endif %}
 
-{% include "photologue/includes/paginator.html" %}
+
+
+    <div class="row">
+      <p class="page-header">
+        <a href="{% url 'collection' %}">{% trans "View by Collection" %}</a>
+        /
+        <a href="{% url 'category' %}">{% trans "View by Category" %}</a>
+    </div>
+    {% if object_list %}
+    <div class="row">
+      <div class="col-lg-12">
+        {% for gallery in object_list %}
+          <a id="a_wrapper" class="gallery-sample" href="{{ gallery.get_absolute_url }}">
+            <img src="{{ gallery.sample.image |thumbnail_url:'thumbnail' }}" alt="{{ gallery.title }}">
+            <p class="text">{{ gallery.title }}</p>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% else %}
+    <div class="row">
+      {% trans "No galleries were found" %}.
+    </div>
+    {% endif %}
+
+
+
 
 <!-- user not logged in -->
 {% else %}
 <a class="btn btn-primary" href="{% url 'login' %}">Log in</a>
 
-<a class="btn btn-info" href="{% url 'register' %}">Register!</a>
+<a class="btn btn-info" href="{% url 'register' %}">Register</a>
 {% endif %}
 {% endblock %}

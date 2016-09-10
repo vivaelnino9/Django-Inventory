@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
+
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+
 from django.core.urlresolvers import reverse
 from django.utils import formats
 from django.shortcuts import get_object_or_404
@@ -11,6 +14,8 @@ from django.utils import timezone
 
 from inv_app.forms import *
 from inv_app.models import *
+
+from django.views.generic.edit import FormView
 
 
 def index(request):
@@ -97,7 +102,7 @@ def user_login(request):
                 # We'll send the user to the products page.
                 login(request, user)
                 #return render(request,"products.html")
-                return HttpResponseRedirect(reverse('products'))
+                return HttpResponseRedirect(reverse('collection'))
             else:
                 # An inactive account was used - no logging in!
                 return render(request, 'redirect.html', {
@@ -131,7 +136,50 @@ def profile(request, inv_user_id):
 @login_required
 def user_logout(request):
     logout(request)
-    return render(request,"products.html")
+    return HttpResponseRedirect(reverse('product'))
+
+
+class CollectionListView(ListView):
+    # queryset = Gallery.objects.on_site().is_public()
+    paginate_by = 20
+    queryset = Gallery.objects.all()
+class CategoryListView(ListView):
+    # queryset = Gallery.objects.on_site().is_public()
+    paginate_by = 20
+    queryset = Gallery.objects.all()
+class GalleryDetailView(DetailView):
+    queryset = Gallery.objects.all()
+class PhotoDetailView(DetailView):
+    queryset = Photo.objects.all()
+
+
+
+
+
+
+
+# class CollectionsView(ListView):
+#     paginate_by = 20
+#     def get_queryset(self):
+#         collection = self.request.GET.get('collection','')
+#         return GalleryExtended.objects.filter(collection)
+# 
+# class CategoriesView(ListView):
+#     paginate_by = 20
+#     def get_queryset(self):
+#         collection = self.request.GET.get('collection','')
+#         return GalleryExtended.objects.filter(collection)
+
+
+
+# class ProductListView(ListView):
+#     queryset = Photo.objects.all()
+#     paginate_by = 16
+#     template_name = 'product.html'
+#     def get_queryset(self):
+#         min_view_count = self.request.GET.get('min_view_count',0)
+#         return Photo.objects.filter(view_count__gte=min_view_count)
+
 
 def concepts(request):
     return render(request,"concepts.html")
@@ -139,3 +187,5 @@ def about(request):
     return render(request,"about.html")
 def contact(request):
     return render(request,"contact.html")
+def press(request):
+    return render(request,"press.html")
