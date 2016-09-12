@@ -4,7 +4,10 @@ from django import forms
 from django.conf.urls import url
 from django.utils.translation import ungettext, ugettext_lazy as _
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
+from inv_app.forms import UploadZipForm
+from django.contrib.admin import helpers
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 
 admin.site.register(Inv_User)
@@ -33,13 +36,10 @@ class GalleryAdmin(admin.ModelAdmin):
         ]
         return add_urls + urls
 
-    @staff_member_required
     def upload_zip(self,request):
         context = {
-            'title': 'Upload a zip archive of photos',
             'app_label': self.model._meta.app_label,
             'opts': self.model._meta,
-            'has_change_permission': self.has_change_permission(request)
         }
 
         # Handle form request

@@ -1,9 +1,28 @@
+import zipfile
+try:
+    from zipfile import BadZipFile
+except ImportError:
+    # Python 2.
+    from zipfile import BadZipfile as BadZipFile
+try:
+    import Image
+except ImportError:
+    from PIL import Image
 import random
+import logging
+import os
 from random import randint
 from django import forms
 from inv_app.models import User, Inv_User, Photo, Gallery
 from django.utils.encoding import force_text
 from django.utils.timezone import now
+from django.template.defaultfilters import slugify
+from django.utils.translation import ugettext_lazy as _
+from django.contrib import messages
+from io import BytesIO
+from django.core.files.base import ContentFile
+
+logger = logging.getLogger('inv_app.forms')
 
 
 class UserForm(forms.ModelForm):
@@ -72,38 +91,52 @@ class UploadZipForm(forms.Form):
     def save(self, request=None, zip_file=None):
         if not zip_file:
             zip_file = self.cleaned_data['zip_file']
-        zip = zipfile.ZipFile(zip_file)
+        zip = zipfile.ZipFile(zip_file,'r')
         count = 1
-        current_site = Site.objects.get(id=settings.SITE_ID)
         if self.cleaned_data['gallery']:
             logger.debug('Using pre-existing gallery.')
             gallery = self.cleaned_data['gallery']
         else:
             logger.debug(
-                force_text('Creating new gallery "{0}".').format(self.cleaned_data['title']))
-            gallery = Gallery.objects.create(title=self.cleaned_data['title'],
-                                             slug=slugify(self.cleaned_data['title']),
-                                             description=self.cleaned_data['description'],
-                                             is_public=self.cleaned_data['is_public'])
-            gallery.sites.add(current_site)
+                force_text('Creating new gallery "{0}".').format(self.cleaned_data['title'])
+            )
+            # make if statement for if there is collection/category
+            gallery = Gallery.objects.create(
+                title=self.cleaned_data['title'],
+                slug=slugify(self.cleaned_data['title']),
+            )
+        # number = randint(0,1000)
+        found_image = False
         for filename in sorted(zip.namelist()):
+            # Get file extension
+            _, file_extension = os.path.splitext(filename)
+            file_extension = file_extension.lower()
 
+            # Skip non jpg files
+            if not file_extension or file_extension != '.jpg':
+                continue
+            # if filename.startswith(dirname):
+            #     if filename.endswith('/'):
+            #         continue
+            #     if filename.endswith('.DS_Store'):
+            #         continue
+            #     filename = filename[len(dirname):]
+            #     print(filename)
             logger.debug('Reading file "{0}".'.format(filename))
 
             if filename.startswith('__') or filename.startswith('.'):
                 logger.debug('Ignoring file "{0}".'.format(filename))
                 continue
 
-            if os.path.dirname(filename):
-                logger.warning('Ignoring file "{0}" as it is in a subfolder; all images should be in the top '
-                               'folder of the zip.'.format(filename))
-                if request:
-                    messages.warning(request,
-                                     _('Ignoring file "{filename}" as it is in a subfolder; all images should '
-                                       'be in the top folder of the zip.').format(filename=filename),
-                                     fail_silently=True)
-                continue
-
+            # if os.path.dirname(filename):
+            #     logger.warning('Ignoring file "{0}" as it is in a subfolder; all images should be in the top '
+            #                    'folder of the zip.'.format(filename))
+            #     if request:
+            #         messages.warning(request,
+            #                          _('Ignoring file "{filename}" as it is in a subfolder; all images should '
+            #                            'be in the top folder of the zip.').format(filename=filename),
+            #                          fail_silently=True)
+            #     continue
             data = zip.read(filename)
 
             if not len(data):
@@ -114,6 +147,13 @@ class UploadZipForm(forms.Form):
 
             # A photo might already exist with the same slug. So it's somewhat inefficient,
             # but we loop until we find a slug that's available.
+            # while True:
+            #     photo_title = ' '.join([photo_title_root, str(number)])
+            #     slug = slugify(photo_title)
+            #     if Photo.objects.filter(slug=slug).exists():
+            #         number = randint(0,1000)
+            #         continue
+            #     break
             while True:
                 photo_title = ' '.join([photo_title_root, str(count)])
                 slug = slugify(photo_title)
@@ -124,8 +164,8 @@ class UploadZipForm(forms.Form):
 
             photo = Photo(title=photo_title,
                           slug=slug,
-                          caption=self.cleaned_data['caption'],
-                          is_public=self.cleaned_data['is_public'])
+                          date_added=now
+                    )
 
             # Basic check that we have a valid image.
             try:
@@ -145,12 +185,16 @@ class UploadZipForm(forms.Form):
                                      fail_silently=True)
                 continue
 
+
+            # dirname = str(zip_file)[:-4] + '/'
+            # filename = filename[len(dirname):]
+
             contentfile = ContentFile(data)
+            print(type(contentfile))
+            print(filename)
             photo.image.save(filename, contentfile)
             photo.save()
-            photo.sites.add(current_site)
             gallery.photos.add(photo)
-            count += 1
 
         zip.close()
 
