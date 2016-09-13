@@ -16,13 +16,14 @@
   <div class="pull-right" id="welcome">HELLO, {{ user.username }}! <a class="btn btn-warning btn-sm" href="{% url 'logout' %}">LOGOUT</a></div>
 </div>
 
-
-
     <div class="row">
       <p class="page-header">
-        <a href="{% url 'collection' %}">{% trans "View by Collection" %}</a>
+        <a href="{% url 'collections' %}"id={% if object_list.0.collection %}"active"{% endif %}
+        >{% trans "View by Collection" %}
+          </a>
         /
-        <a href="{% url 'category' %}">{% trans "View by Category" %}</a>
+        <a href="{% url 'categories' %}"id={% if object_list.0.category %}"active"{% endif %}
+        >{% trans "View by Category" %}</a>
     </div>
     {% if object_list %}
     <div class="row">
