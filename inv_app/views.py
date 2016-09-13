@@ -142,43 +142,16 @@ def user_logout(request):
 class CollectionListView(ListView):
     # queryset = Gallery.objects.on_site().is_public()
     paginate_by = 20
-    queryset = Gallery.objects.all()
+    queryset = Gallery.objects.filter(collection=True)
 class CategoryListView(ListView):
     # queryset = Gallery.objects.on_site().is_public()
     paginate_by = 20
-    queryset = Gallery.objects.all()
+    queryset = Gallery.objects.filter(category=True)
+
 class GalleryDetailView(DetailView):
     queryset = Gallery.objects.all()
 class PhotoDetailView(DetailView):
     queryset = Photo.objects.all()
-
-
-
-
-
-
-
-# class CollectionsView(ListView):
-#     paginate_by = 20
-#     def get_queryset(self):
-#         collection = self.request.GET.get('collection','')
-#         return GalleryExtended.objects.filter(collection)
-# 
-# class CategoriesView(ListView):
-#     paginate_by = 20
-#     def get_queryset(self):
-#         collection = self.request.GET.get('collection','')
-#         return GalleryExtended.objects.filter(collection)
-
-
-
-# class ProductListView(ListView):
-#     queryset = Photo.objects.all()
-#     paginate_by = 16
-#     template_name = 'product.html'
-#     def get_queryset(self):
-#         min_view_count = self.request.GET.get('min_view_count',0)
-#         return Photo.objects.filter(view_count__gte=min_view_count)
 
 
 def concepts(request):

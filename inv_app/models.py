@@ -101,8 +101,10 @@ class Photo(ImageModel):
             self.slug = slugify(self.title)
         super(Photo, self).save(*args, **kwargs)
 
-    def get_absolute_url(self):
-        return reverse('photo-detail', args=[self.slug])
+    def get_absolute_collection_url(self):
+        return reverse('photo-collection', args=[self.slug])
+    def get_absolute_category_url(self):
+        return reverse('photo-category', args=[self.slug])
 
 class Gallery(models.Model):
     date_added = models.DateTimeField(
@@ -124,16 +126,24 @@ class Gallery(models.Model):
         verbose_name='photos',
         blank=True
     )
-    collection = models.CharField(
+    # collection = models.CharField(
+    #     'collection',
+    #     max_length=250,
+    #     blank=True
+    # )
+    # category = models.CharField(
+    #     'category',
+    #     max_length=250,
+    #     choices=CATEGORIES,
+    #     blank=True
+    # )
+    collection = models.BooleanField(
         'collection',
-        max_length=250,
-        blank=True
+        default=False
     )
-    category = models.CharField(
+    category = models.BooleanField(
         'category',
-        max_length=250,
-        choices=CATEGORIES,
-        blank=True
+        default=False
     )
 
     objects = GalleryQuerySet.as_manager()
@@ -148,7 +158,10 @@ class Gallery(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('gallery-detail', args=[self.slug])
+        if self.collection:
+            return reverse('gallery-collection', args=[self.slug])
+        else:
+            return reverse('gallery-category', args=[self.slug])
 
     def photo_count(self):
         return self.photos.count()

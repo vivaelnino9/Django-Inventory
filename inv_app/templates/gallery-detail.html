@@ -14,28 +14,36 @@
 
 	<div class="row">
 		<p class="page-header">
-			<a href="{% url 'collection' %}">{% trans "View by Collection" %}</a>
-			/
-			<a href="{% url 'category' %}">{% trans "View by Category" %}</a>
-	</div>
+			<a href="{% url 'collections' %}"id={% if gallery.collection %}"active"{% endif %}
+			>View by Collection</a>
+			/ <a href="{% url 'categories' %}"id={% if gallery.category %}"active"{% endif %}
+			>View by Category</a>
 
 	<div class="row">
+		<!-- add all collection/category names but have current gallery.title highlighted -->
 			<p class="sub-header">{{ gallery.title }}</p>
 	</div>
-	<div class="row col-lg-12" >
-	    {% for photo in gallery.photos.all %}
-	        <a id="title" href="{{ photo.get_absolute_url }}">
-	             <img id="img_wrapper" src="{{ photo.image|thumbnail_url:'thumbnail' }}" class="thumbnail" alt="{{ photo.title }}">
-							 <p class="text">{{ photo.title }}</p>
-	        </a>
-	    {% endfor %}
-
-				<div>
-					{% if gallery.collection %}
-						<a class="btn btn-default" href="{% url 'collection' %}">{% trans "back to collections" %}
-					{% else %}
-						<a class="btn btn-default" href="{% url 'category' %}" >{% trans "back to categories" %}
-					{% endif %}
-				</a></div>
+	<div class="row">
+		<div class="col-md-12" >
+		    {% for photo in gallery.photos.all %}
+		        <a id="title" href=
+								{% if gallery.collection %}
+										"{{ photo.get_absolute_collection_url }}"
+								{% else %}
+										"{{ photo.get_absolute_category_url }}"
+								{% endif %}>
+		             <img id="img_wrapper" src="{{ photo.image|thumbnail_url:'thumbnail' }}" class="thumbnail" alt="{{ photo.title }}">
+								 <p class="text">{{ photo.title }}</p>
+		        </a>
+		    {% endfor %}
+		</div>
+		<div>
+			{% if gallery.collection %}
+				<a class="btn btn-default" href="{% url 'collections' %}">{% trans "back to collections" %}
+			{% else %}
+				<a class="btn btn-default" href="{% url 'categories' %}" >{% trans "back to categories" %}
+			{% endif %}
+				</a>
+		</div>
 
 {% endblock %}
