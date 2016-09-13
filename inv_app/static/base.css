@@ -123,9 +123,8 @@ img#img_wrapper:hover, a#a_wrapper:hover {
     left: 500px;
     top: 250px
 }
-.col-md-3 {
-    padding-top: 60px;
-    width: 260px;
+.col-md-12 {
+    padding-left: 100px;
 }
 
 /* footer */
@@ -213,9 +212,9 @@ img#img_wrapper:hover, a#a_wrapper:hover {
     color: #333;
 }
 p.sub-header {
-    font-size: 16px;
+    font-size: 15px;
 }
-a#active {
+a:link#active {
     background-color: #d3d3d3;
 }
 p.page-header, p.sub-header {
