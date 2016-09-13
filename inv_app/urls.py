@@ -14,11 +14,14 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^profile/(?P<inv_user_id>[0-9]+)/$', views.profile, name='profile'),
 
-    # my gallery and photo
-    url(r'^gallery/(?P<slug>[\-\d\w]+)/$',views.GalleryDetailView.as_view(template_name="gallery-detail.html"), name='gallery-detail'),
-    url(r'^gallerylist/$',views.CollectionListView.as_view(template_name="products.html"),name='collection'),
-    url(r'^gallerylist/$',views.CategoryListView.as_view(template_name="products.html"),name='category'),
-    url(r'^photo/(?P<slug>[\-\d\w]+)/$',views.PhotoDetailView.as_view(template_name="photo-detail.html"),name='photo-detail'),
+    # collections urls
+    url(r'^collections/$',views.CollectionListView.as_view(template_name="products.html"),name='collections'),
+    url(r'^collections/(?P<slug>[\-\d\w]+)/$',views.GalleryDetailView.as_view(template_name="gallery-detail.html"), name='gallery-collection'),
+    url(r'^collections/product/(?P<slug>[\-\d\w]+)/$',views.PhotoDetailView.as_view(template_name="photo-detail.html"),name='photo-collection'),
+    #categories urls
+    url(r'^categories/$',views.CategoryListView.as_view(template_name="products.html"),name='categories'),
+    url(r'^categories/(?P<slug>[\-\d\w]+)/$',views.GalleryDetailView.as_view(template_name="gallery-detail.html"), name='gallery-category'),
+    url(r'^categories/product/(?P<slug>[\-\d\w]+)/$',views.PhotoDetailView.as_view(template_name="photo-detail.html"),name='photo-category'),
 
 
 
