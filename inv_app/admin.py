@@ -40,6 +40,7 @@ class GalleryAdmin(admin.ModelAdmin):
         context = {
             'app_label': self.model._meta.app_label,
             'opts': self.model._meta,
+            'has_change_permission': self.has_change_permission(request)
         }
 
         # Handle form request
