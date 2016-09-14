@@ -83,7 +83,7 @@ class Photo(ImageModel):
     )
     date_added = models.DateTimeField(
         'date added',
-        default=now
+        auto_now=True
     )
     objects = PhotoQuerySet.as_manager()
 
@@ -96,15 +96,8 @@ class Photo(ImageModel):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        if self.slug is None:
-            self.slug = slugify(self.title)
-        super(Photo, self).save(*args, **kwargs)
-
-    def get_absolute_collection_url(self):
-        return reverse('photo-collection', args=[self.slug])
-    def get_absolute_category_url(self):
-        return reverse('photo-category', args=[self.slug])
+    def get_absolute_url(self):
+        return reverse('photo-detail', args=[self.slug])
 
 class Gallery(models.Model):
     date_added = models.DateTimeField(
@@ -126,17 +119,6 @@ class Gallery(models.Model):
         verbose_name='photos',
         blank=True
     )
-    # collection = models.CharField(
-    #     'collection',
-    #     max_length=250,
-    #     blank=True
-    # )
-    # category = models.CharField(
-    #     'category',
-    #     max_length=250,
-    #     choices=CATEGORIES,
-    #     blank=True
-    # )
     collection = models.BooleanField(
         'collection',
         default=False
