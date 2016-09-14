@@ -9,3 +9,6 @@ __pycache__
 # Django
 inventory/static
 inventory/media/
+
+#ToDO
+To-Do.rtf
