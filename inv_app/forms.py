@@ -190,16 +190,14 @@ class UploadZipForm(forms.Form):
             # filename = filename[len(dirname):]
 
             contentfile = ContentFile(data)
-            print(type(contentfile))
-            print(filename)
             photo.image.save(filename, contentfile)
             photo.save()
             gallery.photos.add(photo)
 
         zip.close()
 
-        if request:
-            messages.success(request,
-                             _('The photos have been added to gallery "{0}".').format(
-                                 gallery.title),
-                             fail_silently=True)
+        # if request:
+        #     messages.success(request,
+        #                      _('The photos have been added to gallery "{0}".').format(
+        #                          gallery.title),
+        #                      fail_silently=True)
