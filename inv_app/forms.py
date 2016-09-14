@@ -21,6 +21,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import messages
 from io import BytesIO
 from django.core.files.base import ContentFile
+from django.db import models
 
 logger = logging.getLogger('inv_app.forms')
 
@@ -53,6 +54,14 @@ class UploadZipForm(forms.Form):
         help_text=
             'Select a gallery to add these images to. Leave this empty to'
             'create a new gallery from the supplied title.'
+    )
+    collection = forms.BooleanField(
+        label='Collection',
+        required=False
+    )
+    category = forms.BooleanField(
+        label='Category',
+        required=False
     )
 
     def clean_zip_file(self):
@@ -104,6 +113,8 @@ class UploadZipForm(forms.Form):
             gallery = Gallery.objects.create(
                 title=self.cleaned_data['title'],
                 slug=slugify(self.cleaned_data['title']),
+                collection = self.cleaned_data['collection'],
+                category = self.cleaned_data['category']
             )
         # number = randint(0,1000)
         found_image = False
@@ -115,28 +126,12 @@ class UploadZipForm(forms.Form):
             # Skip non jpg files
             if not file_extension or file_extension != '.jpg':
                 continue
-            # if filename.startswith(dirname):
-            #     if filename.endswith('/'):
-            #         continue
-            #     if filename.endswith('.DS_Store'):
-            #         continue
-            #     filename = filename[len(dirname):]
-            #     print(filename)
             logger.debug('Reading file "{0}".'.format(filename))
 
             if filename.startswith('__') or filename.startswith('.'):
                 logger.debug('Ignoring file "{0}".'.format(filename))
                 continue
 
-            # if os.path.dirname(filename):
-            #     logger.warning('Ignoring file "{0}" as it is in a subfolder; all images should be in the top '
-            #                    'folder of the zip.'.format(filename))
-            #     if request:
-            #         messages.warning(request,
-            #                          _('Ignoring file "{filename}" as it is in a subfolder; all images should '
-            #                            'be in the top folder of the zip.').format(filename=filename),
-            #                          fail_silently=True)
-            #     continue
             data = zip.read(filename)
 
             if not len(data):
@@ -185,14 +180,11 @@ class UploadZipForm(forms.Form):
                                      fail_silently=True)
                 continue
 
-
-            # dirname = str(zip_file)[:-4] + '/'
-            # filename = filename[len(dirname):]
-
             contentfile = ContentFile(data)
             photo.image.save(filename, contentfile)
             photo.save()
             gallery.photos.add(photo)
+            count += 1
 
         zip.close()
 
