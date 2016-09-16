@@ -214,7 +214,7 @@ img#img_wrapper:hover, a#a_wrapper:hover {
 p.sub-header {
     font-size: 15px;
 }
-a:link#active {
+.hover:link#active, .hover:hover {
     background-color: #d3d3d3;
 }
 p.page-header, p.sub-header {
