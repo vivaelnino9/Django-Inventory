@@ -18,11 +18,11 @@
 
     <div class="row">
       <p class="page-header">
-        <a href="{% url 'collections' %}"id={% if object_list.0.collection %}"active"{% endif %}
+        <a class="hover" href="{% url 'collections' %}"id={% if 'collections' in request.path %}"active"{% endif %}
         >{% trans "View by Collection" %}
           </a>
         /
-        <a href="{% url 'categories' %}"id={% if object_list.0.category %}"active"{% endif %}
+        <a class ="hover" href="{% url 'categories' %}"id={% if 'categories' in request.path %}"active"{% endif %}
         >{% trans "View by Category" %}</a>
     </div>
     {% if object_list %}

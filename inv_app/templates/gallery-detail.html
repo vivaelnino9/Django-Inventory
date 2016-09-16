@@ -14,10 +14,12 @@
 
 	<div class="row">
 		<p class="page-header">
-			<a href="{% url 'collections' %}"id={% if gallery.collection %}"active"{% endif %}
-			>View by Collection</a>
-			/ <a href="{% url 'categories' %}"id={% if gallery.category %}"active"{% endif %}
-			>View by Category</a>
+			<a class="hover" href="{% url 'collections' %}"id={% if 'collections' in request.path %}"active"{% endif %}
+			>{% trans "View by Collection" %}
+				</a>
+			/
+			<a class ="hover" href="{% url 'categories' %}"id={% if 'categories' in request.path %}"active"{% endif %}
+			>{% trans "View by Category" %}</a>
 
 	<div class="row">
 		<!-- add all collection/category names but have current gallery.title highlighted -->
