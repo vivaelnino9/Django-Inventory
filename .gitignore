@@ -12,3 +12,6 @@ inventory/media/
 
 #ToDO
 To-Do.rtf
+
+#Settings
+inventory/local_settings.py
