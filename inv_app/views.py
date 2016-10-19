@@ -102,7 +102,7 @@ def user_login(request):
                 # We'll send the user to the products page.
                 login(request, user)
                 #return render(request,"products.html")
-                return HttpResponseRedirect(reverse('collection'))
+                return HttpResponseRedirect(reverse('collections'))
             else:
                 # An inactive account was used - no logging in!
                 return render(request, 'redirect.html', {
